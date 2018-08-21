@@ -55,12 +55,29 @@ let combinators = {
     "K":K
 }
 
+function hasArray(node)
+{
+    for(let i of node) 
+    {
+        if(Array.isArray(i)) return true;
+    }
+    return false;
+}
+
 function transform(tree)
 {
-    for(let node in tree)
+    console.log(tree);
+    for(let node of tree)
     {
         console.log(node);
-        if(node)
+        if(hasArray(node))
+        {
+            transform(node);
+        }
+        else
+        {
+
+        }
     }
     return tree;
 }
@@ -70,7 +87,7 @@ function combi(string,...values)
     let parsed = partial(string);
     parsed = fill(parsed,values);
     let tree = ast(parsed);
-    return transform(tree);
+    return tree;
 }
 
 let test1 = combi`( K ( I ( I #${true} ) ) ) ( I #${false} ) )`;
