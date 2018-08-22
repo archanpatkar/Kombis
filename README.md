@@ -1,2 +1,2 @@
-### <img src="./Combino.svg"/>
+#### <img src="./Combino.svg"/>
 A DSL for Combinatory Logic
