@@ -11,7 +11,13 @@ SKI Combinator Calculus is a **combinatory logic**, a **Computational System** o
 ```javascript
 combi`(K)`
 ```
+
 **Encoding FALSE**
 ```javascript
 combi`(SK)`
+```
+
+Using Custom Primitive Values in conjunction with Combino
+```javascript
+combi`((K(I #${false})(I(I #${10}))))`
 ```
