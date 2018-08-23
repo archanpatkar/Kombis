@@ -1,5 +1,5 @@
 # Combino
-### A DSL/Compiler for Combinatory Logic based on the universal formal system SKI Combinator Calculus
+### A Compiler/DSL for Combinatory Logic based on the universal formal system SKI Combinator Calculus
 
 ## Background
 Combinatory logic is a notation to eliminate the need for quantified variables in **mathematical logic**. It was introduced by **Moses Schönfinkel** and **Haskell Curry**, and has more recently been used in computer science as a **theoretical model of computation** and also as a basis for the design of **functional programming languages**.
