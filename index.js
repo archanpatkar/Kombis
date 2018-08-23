@@ -129,19 +129,27 @@ console.log(test1);
 let test2 = combi`(SII#${(x)=>10})`;
 console.log(test2);
 
+// Testing
+console.log("Testing")
+let mp = combi`(SKISKI)`;
+console.log(mp);
+
 // Self Application
 console.log("SELF APPLICATION");
-let sa = combi`(SII#${(x)=>10})`;
+let sa = combi`(SII#${(x) => 10})`;
 console.log(sa);
-console.log("IRREDUCIBLE PROPERTY");
-// Uncomment the lines below to see the effect
+// console.log("IRREDUCIBLE PROPERTY");
 // SII(SII) = I(SII)(I(SII)) = I(SII)(SII) = SII(SII) ...[Infinite Recursion 💣]
+// Uncomment the lines below to see the effect
 // let limitsa = combi`(SII(SII))`;
 // console.log(limitsa);
 
 // Recursion
+// β = S(Kα)(SII)
+// SIIβ = ββ ...[Infinite Recursion 💣]
+// Uncomment the lines below to see the effect
 // console.log("RECURSION");
-// let limitsa = combi`(SII(SII))`;
+// let limitsa = combi`(S(K#${(x)=>10})(SII(S(K#${(x)=>10})(SII)))`;
 // console.log(limitsa);
 
 // Truth Values
