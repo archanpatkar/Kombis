@@ -7,7 +7,7 @@ Combinatory logic is a notation to eliminate the need for quantified variables i
 SKI Combinator Calculus is a **combinatory logic**, a **Computational System** or **Model of Computation** which may be perceived as reduced version of **untyped lambda calculus**. It can be thought of as a computer programming language, though it is not convenient for writing software. Instead, it is important in the mathematical theory of algorithms because it is an extremely simple Turing complete language.
 
 ## Implementation
-Combino can be used as a **Embedded DSL** inside of Javascript using **Tagged String Templates**.The DSL completly supports **SKI Combinator Calculus Grammer** which is then **transformed** into ES6(Arrow Functions) these transforms are applied using **Tag** on **String Templates**. 
+Combino can be used as a **Embedded DSL** inside of Javascript using **Tagged String Templates**. The DSL completly supports **SKI Combinator Calculus Grammer** which is then **transformed** into ES6(Arrow Functions) these transforms are applied using **Tag** on **String Templates**. 
 
 ## Examples
 **Encoding TRUE**
