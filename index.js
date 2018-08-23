@@ -112,7 +112,6 @@ function combi(string,...values)
     parsed = fill(parsed,values);
     let tree = ast(parsed);
     let transformed = transform(tree);
-    console.log(transformed);
     return transformed
             .reduce((acc, val) => acc.concat(val), [])
             .map(tfc => eval(tfc))
