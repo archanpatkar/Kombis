@@ -84,7 +84,7 @@ function transform(tree)
         {
             let comb = combinators[c];
             let values = [];
-            for(let v = 0; v < comb.params; v++)
+            for(let v = 0; v < node.length; v++)
             {
                 const val = node[v];
                 if(Array.isArray(val)) values.push(transform([val]));
@@ -112,6 +112,7 @@ function combi(string,...values)
     parsed = fill(parsed,values);
     let tree = ast(parsed);
     let transformed = transform(tree);
+    console.log(transformed);
     return transformed
             .reduce((acc, val) => acc.concat(val), [])
             .map(tfc => eval(tfc))
@@ -134,10 +135,11 @@ console.log("Testing")
 let mp = combi`(SKISKI)`;
 console.log(mp);
 
-// Self Application
+// Self Application a.k.a Mockingbird
 console.log("SELF APPLICATION");
 let sa = combi`(SII#${(x) => 10})`;
 console.log(sa);
+
 // console.log("IRREDUCIBLE PROPERTY");
 // SII(SII) = I(SII)(I(SII)) = I(SII)(SII) = SII(SII) ...[Infinite Recursion 💣]
 // Uncomment the lines below to see the effect
