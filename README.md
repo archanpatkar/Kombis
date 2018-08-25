@@ -9,6 +9,18 @@ SKI Combinator Calculus is a **combinatory logic**, a **Computational System** o
 ## Implementation
 Combino can be used as a **Embedded DSL** inside of Javascript using **Tagged String Templates**(*Macros*). The DSL completly supports **SKI Combinator Calculus Grammer** which is then **transformed** or **compiled** into **Javascript - ES6** this transformation is applied using a, **Tag** on **String Template** which will contain the Combino/SKI **Code**. Combino allows to write very complicated functional hybird **SKI** compositions which allows **infusion** of Javascript with **SKI Combinator Calculus** in a **concise** manner. Complex **Compositions** and **Representations** are easier to write in Combino rather than native Javascript
 
+## Usage
+
+#### Compilation (to Javascript)
+```javascript
+let compiled = combc`...`
+```
+
+#### Compilation and Execution
+```javascript
+let output = combi`...`
+```
+
 ## Examples
 **Encoding TRUE**
 ```javascript
@@ -26,6 +38,7 @@ combi`((K(I #${false})(I(I #${10}))))`
 ```
 **Recursion**
 > This will result in Infinite Recursion 💣
+
 Recursion in **SKI Combinator Calculus** and **Lambda Calculus** is achieved by Fixed-point combinators and
 the infamous **Y Combinator** discovered by **Haskell Curry** 
 #### Compilation
