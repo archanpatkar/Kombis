@@ -40,8 +40,41 @@ combi`((K(I #${false})(I(I #${10}))))`
 
 Recursion in **SKI Combinator Calculus** and **Lambda Calculus** is achieved by Fixed-point combinators and
 the infamous **Y Combinator** discovered by **Haskell Curry** 
-> This will result in Infinite Recursion 💣
 
+There are two ways to encode it
+
+`Variant 1`(Good for understanding)
+
+Derivation 1
+```
+S(Kα)(SII)(S(Kα)(SII))
+= Kα(S(Kα)(SII))(SII(S(Kα)(SII)))
+= α(S(Kα)(SII)(S(Kα)(SII)))
+= α(α(S(Kα)(SII)(S(Kα)(SII))))
+= α(α(α(S(Kα)(SII)(S(Kα)(SII)))))
+= ...
+```
+
+Derivation 2
+```
+β = S(Kα)(SII)
+SIIβ 
+= ββ
+= (S(Kα)(SII))β 
+= Kαβ(SIIβ) 
+= α(SIIβ) 
+= α(ββ)
+= α(α(ββ))
+= α(α(α(ββ)))
+= ...
+```
+
+Combino Code
+```javascript
+combi`(S(K#${(x)=>10})(SII(S(K#${(x)=>10})(SII)))`
+```
+
+`Variant 2`(Standard Way and Easy to use)
 ```javascript
 combi`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
