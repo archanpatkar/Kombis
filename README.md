@@ -24,3 +24,8 @@ combi`(SK)`
 ```javascript
 combi`((K(I #${false})(I(I #${10}))))`
 ```
+**Recursion**
+> This will result in Infinite Recursion 💣
+```javascript
+combi`(S(K#${(x)=>10})(SII(S(K#${(x)=>10})(SII)))`
+```
