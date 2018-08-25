@@ -78,3 +78,9 @@ combi`(S(K #${(x)=>10})(SII(S(K #${(x)=>10})(SII)))`
 ```javascript
 combi`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
+
+
+#### `Variant 3`(Built-in)
+```javascript
+combi`(Y#${x => 10})`
+```
