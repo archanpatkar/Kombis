@@ -26,11 +26,11 @@ combi`((K(I #${false})(I(I #${10}))))`
 ```
 **Recursion** (Y Combinator Fixed point combinator encoded in SKI Calculus)
 > This will result in Infinite Recursion 💣
-Compilation
+**Compilation**
 ```javascript
 combc`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
-Compilation and Execution
+**Compilation and Execution**
 ```javascript
 combi`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
