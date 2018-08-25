@@ -51,14 +51,16 @@ function ast(parsed)
     return node;
 }
 
-let I = (x) => x;
-let K = (x) => (y) => x;
-let S = (x) => (y) => (z) => (x(z))(y(z));
+const I = x => x;
+const K = x => y => x;
+const S = x => y => z => x(z)(y(z));
+const Y = a => (x => y => z => x(z)(y(z)))((x => y => x)((x => y => z => x(z)(y(z)))(x => x)(x => x)))((x => y => z => x(z)(y(z)))((x => y => z => x(z)(y(z)))((x => y => x)(x => y => z => x(z)(y(z))))(x => y => x))((x =>y => x)((x => y => z => x(z)(y(z)))(x => x)(x => x))))(a);
 
 let combinators = {
     "I":{ c:I , params:1 },
     "K":{ c:K , params:2 },
-    "S":{ c:S , params:3 }
+    "S":{ c:S , params:3 },
+    "Y":{ c:Y , params:1 }
 }
 
 function transform(tree)
@@ -97,6 +99,13 @@ function transform(tree)
     return transformed;
 }
 
+const seval = eval;
+
+function log(s)
+{
+    console.log(s);
+}
+
 function combi(string,...values)
 {
     let parsed = partial(string);
@@ -105,11 +114,7 @@ function combi(string,...values)
     let transformed = transform(tree);
     return transformed
             .reduce((acc, val) => acc.concat(val), [])
-            .map(tfc => eval(tfc))
-            .map( eval => {
-                if(eval instanceof Function) return eval.toString()
-                else return eval;
-            });
+            .map(tfc => seval(tfc));
 }
 
 function combc(string,...values)
