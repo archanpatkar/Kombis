@@ -37,15 +37,16 @@ combi`(SK)`
 combi`((K(I #${false})(I(I #${10}))))`
 ```
 **Recursion**
-> This will result in Infinite Recursion 💣
-
 Recursion in **SKI Combinator Calculus** and **Lambda Calculus** is achieved by Fixed-point combinators and
 the infamous **Y Combinator** discovered by **Haskell Curry** 
+
 #### Compilation
 ```javascript
 combc`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
 #### Compilation and Execution
+> This will result in Infinite Recursion 💣
+
 ```javascript
 combi`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
