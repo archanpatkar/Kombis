@@ -22,28 +22,28 @@ let output = combi`...`
 ```
 
 ## Examples
-**Encoding TRUE**
+### Encoding TRUE
 ```javascript
 combi`(K)`
 ```
 
-**Encoding FALSE**
+### Encoding FALSE
 ```javascript
 combi`(SK)`
 ```
 
-**Using Custom Primitive Values in conjunction with Combino**
+### Using Custom Primitive Values in conjunction with Combino
 ```javascript
 combi`((K(I #${false})(I(I #${10}))))`
 ```
-**Recursion**
+### Recursion
 
 Recursion in **SKI Combinator Calculus** and **Lambda Calculus** is achieved by Fixed-point combinators and
 the infamous **Y Combinator** discovered by **Haskell Curry** 
 
 There are two ways to encode it
 
-`Variant 1`(Good for understanding)
+#### `Variant 1`(Good for understanding)
 
 Derivation 1
 ```
@@ -74,7 +74,7 @@ Combino Code
 combi`(S(K #${(x)=>10})(SII(S(K #${(x)=>10})(SII)))`
 ```
 
-`Variant 2`(Standard Way and Easy to use)
+#### `Variant 2`(Standard Way and Easy to use)
 ```javascript
 combi`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
 ```
