@@ -11,12 +11,12 @@ Combino can be used as a **Embedded DSL** inside of Javascript using **Tagged St
 
 ## Usage
 
-#### Compilation (to Javascript)
+#### `Compilation (to Javascript)`
 ```javascript
 let compiled = combc`...`
 ```
 
-#### Compilation and Execution
+#### `Compilation and Execution`
 ```javascript
 let output = combi`...`
 ```
@@ -40,12 +40,6 @@ combi`((K(I #${false})(I(I #${10}))))`
 
 Recursion in **SKI Combinator Calculus** and **Lambda Calculus** is achieved by Fixed-point combinators and
 the infamous **Y Combinator** discovered by **Haskell Curry** 
-
-#### Compilation
-```javascript
-combc`(S(K(SII))(S(S(KS)K)(K(SII)))#${x => 10})`
-```
-#### Compilation and Execution
 > This will result in Infinite Recursion 💣
 
 ```javascript
