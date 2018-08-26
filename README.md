@@ -1,4 +1,4 @@
-# युत - Yuta
+# Combi
 ### A DSL Compiler for Combinatory Logic based on the universal formal system SKI Combinator Calculus
 
 ## Background
@@ -7,7 +7,7 @@ Combinatory logic is a notation to eliminate the need for quantified variables i
 SKI Combinator Calculus is a **combinatory logic**, a **Computational System** or **Model of Computation** which may be perceived as reduced version of **untyped lambda calculus**. It can be thought of as a computer programming language, though it is not convenient for writing software. Instead, it is important in the mathematical theory of algorithms because it is an extremely simple Turing complete language.
 
 ## Implementation
-Yuta can be used as a **Embedded DSL** inside of Javascript using **Tagged String Templates**(*Macros*). The DSL completly supports **SKI Combinator Calculus Grammer** which is then **transformed** or **compiled** into **Javascript - ES6** this transformation is applied using a, **Tag** on **String Template** which will contain the Yuta/SKI **Code**. Yuta allows to write very complicated functional hybird **SKI** compositions which allows **infusion** of Javascript with **SKI Combinator Calculus** in a **concise** manner. Complex **Compositions** and **Representations** are easier to write in Yuta rather than native Javascript
+Combi can be used as a **Embedded DSL** inside of Javascript using **Tagged String Templates**(*Macros*). The DSL completly supports **SKI Combinator Calculus Grammer** which is then **transformed** or **compiled** into **Javascript - ES6** this transformation is applied using a, **Tag** on **String Template** which will contain the Combi/SKI **Code**. Combi allows to write very complicated functional hybird **SKI** compositions which allows **infusion** of Javascript with **SKI Combinator Calculus** in a **concise** manner. Complex **Compositions** and **Representations** are easier to write in Combi rather than native Javascript
 
 ## Usage
 
@@ -32,7 +32,7 @@ combi`(K)`
 combi`(SK)`
 ```
 
-### Using Custom Primitive Values in conjunction with Yuta
+### Using Custom Primitive Values in conjunction with Combi
 ```javascript
 combi`((K(I #${false})(I(I #${10}))))`
 ```
@@ -70,7 +70,7 @@ SIIβ
 = ...
 ```
 
-Yuta Code
+Combi Code
 ```javascript
 combi`(S(K #${(x)=>10})(SII)(S(K #${(x)=>10})(SII)))`
 ```
