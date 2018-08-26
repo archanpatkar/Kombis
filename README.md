@@ -1,4 +1,4 @@
-# Combino
+# Yuta
 ### A DSL Compiler for Combinatory Logic based on the universal formal system SKI Combinator Calculus
 
 ## Background
