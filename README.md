@@ -34,7 +34,7 @@ combi`(SK)`
 
 ### Using Custom Primitive Values in conjunction with Combi
 ```javascript
-combi`((K(I #${false})(I(I #${10}))))`
+combi`((K(I ${false})(I(I ${10}))))`
 ```
 ### Recursion
 > This will lead to Infinite Recursion 💣
@@ -72,15 +72,15 @@ SIIβ
 
 Combi Code
 ```javascript
-combi`(S(K #${(x)=>10})(SII)(S(K #${(x)=>10})(SII)))`
+combi`(S(K ${(x)=>10})(SII)(S(K ${(x)=>10})(SII)))`
 ```
 
 #### `Variant 2`(Standard Way and Easy to use)
 ```javascript
-combi`(S(K(SII))(S(S(KS)K)(K(SII))) #${x => 10})`
+combi`(S(K(SII))(S(S(KS)K)(K(SII))) ${x => 10})`
 ```
 
 #### `Variant 3`(Built-in)
 ```javascript
-combi`(Y #${x => 10})`
+combi`(Y ${x => 10})`
 ```
