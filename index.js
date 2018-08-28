@@ -1,35 +1,12 @@
-function partial(string)
+function parse(string,values)
 {
-    string = string.map(element => element.split(""));
-    let partial = "";
-    for(let s of string)
+    let parsed = [];
+    for(let s in string)
     {
-        if(Array.isArray(s))
-        {
-            for(let i of s) partial += i;
-        }
-        else
-        {
-            partial += s;
-        }
+        for(let i of string[s]) if(i != " ") parsed.push(i);
+        if(values.length > s) parsed.push(values[s]);
     }
-    return partial;
-}
-
-function fill(partial,values)
-{
-    let complete = [];
-    let value = "";
-    let counter = 0;
-    for(let i in partial)
-    {
-        value = partial[i];
-        if(value == " ");
-        else if(value == "#") complete.push(values[counter++]);
-        else complete.push(value);
-        
-    }
-    return complete;
+    return parsed;
 }
 
 function ast(parsed)
@@ -61,7 +38,7 @@ let combinators = {
     "K":{ c:K , params:2 },
     "S":{ c:S , params:3 },
     "Y":{ c:Y , params:1 }
-}
+};
 
 function transform(tree)
 {
@@ -99,28 +76,19 @@ function transform(tree)
     return transformed;
 }
 
-const seval = eval;
-
-function log(s)
-{
-    console.log(s);
-}
-
 function combi(string,...values)
 {
-    let parsed = partial(string);
-    parsed = fill(parsed,values);
+    let parsed = parse(string,values);
     let tree = ast(parsed);
     let transformed = transform(tree);
     return transformed
             .reduce((acc, val) => acc.concat(val), [])
-            .map(tfc => seval(tfc));
+            .map(tfc => eval(tfc));
 }
 
 function combc(string,...values)
 {
-    let parsed = partial(string);
-    parsed = fill(parsed,values);
+    let parsed = parse(string,values);
     let tree = ast(parsed);
     let transformed = transform(tree);
     return transformed
