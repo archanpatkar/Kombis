@@ -29,11 +29,11 @@ console.log(sa[0].toString());
 // SIIβ = ββ ...[Infinite Recursion 💣]
 // Uncomment the lines below to see the effect
 // console.log("RECURSION");
-// let limitsa = combi`(S(K#${(x)=>10})(SII)(S(K#${(x)=>10})(SII)))`;
+// let limitsa = combi`(S(K ${(x)=>10})(SII)(S(K ${(x)=>10})(SII)))`;
 // console.log(limitsa);
 
 // console.log("RECURSION");
-// let limitsa = combi`(Y#${x => log(10)})`;
+// let limitsa = combi`(Y ${x => log(10)})`;
 // console.log(limitsa[0]);
 
 console.log("REVERSAL");
