@@ -60,7 +60,7 @@ console.log(not_of_true[0].toString());
 // OR
 console.log("OR");
 const or_t_t = combi`(K(K)(K))`
-console.log(or_t_t[0].toString());
+console.log(or_t_t[0](false)(true));
 
 const or_t_f = combi`(K(K)(SK))`
 console.log(or_t_f[0].toString());
