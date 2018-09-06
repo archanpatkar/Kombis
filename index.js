@@ -4,7 +4,7 @@ function parse(string,values)
     for(let s in string)
     {
         for(let i of string[s]) if(i != " ") parsed.push(i);
-        if(values.length > s) parsed.push(values[s]);
+        if(values[s] != undefined) parsed.push(values[s]);
     }
     return parsed;
 }
