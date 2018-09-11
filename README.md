@@ -1,4 +1,4 @@
-# <img src="./combi.png"/>
+### <img src="./combi.png"/>
 ### A DSL Compiler for Combinatory Logic based on the universal formal system SKI Combinator Calculus
 
 ## Background
