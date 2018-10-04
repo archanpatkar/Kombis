@@ -72,7 +72,7 @@ SIIβ
 
 Combi Code
 ```javascript
-combi`(S(K ${(x)=>10})(SII)(S(K ${(x)=>10})(SII)))`
+combi`(S(K ${x => 10})(SII)(S(K ${x => 10})(SII)))`
 ```
 
 #### `Variant 2`(Standard Way and Easy to use)
