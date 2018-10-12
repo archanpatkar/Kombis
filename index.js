@@ -1,4 +1,4 @@
-function parse(string,values)
+function parse(string,...values)
 {
     let parsed = [];
     for(let s in string)
@@ -8,6 +8,8 @@ function parse(string,values)
     }
     return parsed;
 }
+
+let macros = {};
 
 function ast(parsed)
 {
@@ -27,6 +29,36 @@ function ast(parsed)
     }
     return node;
 }
+
+function macrotransform(ast)
+{
+
+}
+
+function deftransform(ast)
+{
+    for(let n of ast)
+    {
+        if(n[0] instanceof Array) deftransform(n);
+        if(n[0] == "*")
+        {
+            let name = "";
+            n.shift();
+            let char = "";
+            while(char != "*")
+            {
+                name += char;
+                char = n[0];
+                n.shift();
+            }
+            combinators[name] = { c: n[0] , params:n.length };
+            n.shift();
+            ast.shift();
+        }
+       
+    }
+    return ast;
+} 
 
 const I = x => x;
 const K = x => y => x;
@@ -90,10 +122,15 @@ function combc(string,...values)
 {
     let parsed = parse(string,values);
     let tree = ast(parsed);
-    let transformed = transform(tree);
+    let mtree = deftransform(tree);
+    let transformed = transform(mtree);
     return transformed
             .reduce((acc, val) => acc.concat(val), []);
 }
 
 module.exports.combi = combi;
 module.exports.combc = combc;
+
+
+console.log(deftransform(ast(parse`( (*Jag* ${(x)=>(y)=>(z)=>z}) (IJagIKI) )`)));
+console.log(combinators);
