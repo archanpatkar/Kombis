@@ -1,9 +1,35 @@
-function parse(string,...values)
+let symbols = ["(",")","*","I","K","S","Y"];
+
+function empty(str)
+{
+    if(str == "") return true;
+    if(str == " ") return true;
+    if(str == "\n") return true;
+    if(str == "\b") return true;
+    if(str == "\t") return true;
+}
+
+function parse(string,values)
 {
     let parsed = [];
     for(let s in string)
     {
-        for(let i of string[s]) if(i != " ") parsed.push(i);
+        let i = 0;
+        while(i < string[s].length) 
+        {
+            let str = string[s][i++];
+            if(!symbols.includes(str) && !empty(str))
+            {
+                let temp = "";
+                while(!empty(str) && !symbols.includes(str) && i < string[s].length)
+                {
+                    temp += str;
+                    str = string[s][i++];
+                }
+                parsed.push(temp);
+            }
+            if(!empty(str)) parsed.push(str);
+        }
         if(values[s] != undefined) parsed.push(values[s]);
     }
     return parsed;
@@ -79,31 +105,34 @@ function transform(tree)
     for(let n in tree)
     {    
         let node = tree[n];
-        let c = node[0];
-        node.shift();
-        if(Array.isArray(c)) transformed.push(transform([c]));
-        if(c in combinators)
+        while(node.length != 0)
         {
-            let comb = combinators[c];
-            let values = [];
-            for(let v = 0; v < node.length; v++)
+            let c = node[0];
+            node.shift();
+            if(Array.isArray(c)) transformed.push(transform([c]));
+            if(c in combinators)
             {
-                const val = node[v];
-                if(Array.isArray(val)) values.push(transform([val]));
-                else if(val in combinators) values.push(`${combinators[val].c}`);
-                else if(val != undefined) values.push(val);
+                let comb = combinators[c];
+                let values = [];
+                for(let v = 0; v < node.length; v++)
+                {
+                    const val = node[v];
+                    if(Array.isArray(val)) values.push(transform([val]));
+                    else if(val in combinators) values.push(`${combinators[val].c}`);
+                    else if(val != undefined) values.push(val);
+                }
+                if(values.length > 0)
+                {
+                    let params = "";
+                    for(let v of values) params += `(${v})`
+                    transformed.push(`(${comb.c})${params}`);
+                }
+                else
+                {
+                    transformed.push(`(${comb.c})`);
+                }
             }
-            if(values.length > 0)
-            {
-                let params = "";
-                for(let v of values) params += `(${v})`
-                transformed.push(`(${comb.c})${params}`);
-            }
-            else
-            {
-                transformed.push(`(${comb.c})`);
-            }
-        }   
+        }
     }
     return transformed;
 }
@@ -112,7 +141,8 @@ function combi(string,...values)
 {
     let parsed = parse(string,values);
     let tree = ast(parsed);
-    let transformed = transform(tree);
+    let mtree = deftransform(tree);
+    let transformed = transform(mtree);
     return transformed
             .reduce((acc, val) => acc.concat(val), [])
             .map(tfc => eval(tfc));
@@ -122,6 +152,7 @@ function combc(string,...values)
 {
     let parsed = parse(string,values);
     let tree = ast(parsed);
+    console.log(tree);
     let mtree = deftransform(tree);
     let transformed = transform(mtree);
     return transformed
@@ -132,5 +163,8 @@ module.exports.combi = combi;
 module.exports.combc = combc;
 
 
-console.log(deftransform(ast(parse`( (*Jag* ${(x)=>(y)=>(z)=>z}) (IJagIKI) )`)));
-console.log(combinators);
+console.log(combc`(
+    (*Jag* ${(x)=>(y)=>(z)=>z}) 
+    (IJagIKI)
+    (SKI)
+)`);
