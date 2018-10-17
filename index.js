@@ -105,32 +105,29 @@ function transform(tree)
     for(let n in tree)
     {    
         let node = tree[n];
-        while(node.length != 0)
+        let c = node[0];
+        node.shift();
+        if(Array.isArray(c)) transformed.push(transform([c]));
+        if(c in combinators)
         {
-            let c = node[0];
-            node.shift();
-            if(Array.isArray(c)) transformed.push(transform([c]));
-            if(c in combinators)
+            let comb = combinators[c];
+            let values = [];
+            for(let v = 0; v < node.length; v++)
             {
-                let comb = combinators[c];
-                let values = [];
-                for(let v = 0; v < node.length; v++)
-                {
-                    const val = node[v];
-                    if(Array.isArray(val)) values.push(transform([val]));
-                    else if(val in combinators) values.push(`${combinators[val].c}`);
-                    else if(val != undefined) values.push(val);
-                }
-                if(values.length > 0)
-                {
-                    let params = "";
-                    for(let v of values) params += `(${v})`
-                    transformed.push(`(${comb.c})${params}`);
-                }
-                else
-                {
-                    transformed.push(`(${comb.c})`);
-                }
+                const val = node[v];
+                if(Array.isArray(val)) values.push(transform([val]));
+                else if(val in combinators) values.push(`${combinators[val].c}`);
+                else if(val != undefined) values.push(val);
+            }
+            if(values.length > 0)
+            {
+                let params = "";
+                for(let v of values) params += `(${v})`
+                transformed.push(`(${comb.c})${params}`);
+            }
+            else
+            {
+                transformed.push(`(${comb.c})`);
             }
         }
     }
@@ -154,7 +151,9 @@ function combc(string,...values)
     let tree = ast(parsed);
     console.log(tree);
     let mtree = deftransform(tree);
+    console.log(mtree);
     let transformed = transform(mtree);
+    console.log(transformed);
     return transformed
             .reduce((acc, val) => acc.concat(val), []);
 }
@@ -166,5 +165,5 @@ module.exports.combc = combc;
 console.log(combc`(
     (*Jag* ${(x)=>(y)=>(z)=>z}) 
     (IJagIKI)
-    (SKI)
+    (KI)
 )`);
