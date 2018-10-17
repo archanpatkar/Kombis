@@ -1,9 +1,10 @@
 let M = "M";
 let U = "U";
 let I = "I";
+let EMPTY = "";
 
 var rule3patt = /III/gi;
-var rule4patt = /U+/gi;
+var rule4patt = /UU/gi;
 
 let rules =  {
     1: str => {
@@ -59,7 +60,7 @@ let apply =  {
         return str.replace(rule3patt,U);
     },
     4: str => {
-        return str.replace(rule4patt,U);
+        return str.replace(rule4patt,EMPTY);
     }
 }
 
@@ -120,9 +121,11 @@ function find(start,end,iterations)
     console.log("Randomized Bruteforce Solution for MU Puzzle");
     console.log("Starting String: " + start);
     console.log("To Find: " + end);
+    let order = [];
+    let output = [start];
     let main = start;
     let i = 0;
-    while(i < iterations)
+    while(i < iterations && main != end)
     {
         console.log("Iteration: " + (i+1));
         let rule = selectRandomRule(main);   
@@ -130,15 +133,48 @@ function find(start,end,iterations)
         {
             console.log("Before Rule Application: " + main);
             console.log("Applying Rule: " + rule);
+            order.push(rule);
             main = applyRule(main,rule);
             console.log("After Rule Application: " + main);
         }
+        output.push(main);
         i++;
     }
+    return [order,output];
 }
 
 
-let problem = "MI";
-let tofind = "MU";
+function find2(start,end,iterations)
+{
+    console.log("Randomized Bruteforce Solution for MU Puzzle");
+    console.log("Starting String: " + start);
+    console.log("To Find: " + end);
+    let order = [];
+    let output = [start];
+    let main = start;
+    let i = 0;
+    while(i < iterations && main != end)
+    {
+        console.log("Iteration: " + (i+1));
+        let rules = canAppyHowMany(main);   
+        if(rules != undefined)
+        {
+            for(let rule of rules) {
+                console.log("Before Rule Application: " + main);
+                console.log("Applying Rule: " + rule);
+                order.push(rule);
+                main = applyRule(main,rule);
+                console.log("After Rule Application: " + main);
+            }
+        }
+        output.push(main);
+        i++;
+    }
+    return [order,output];
+}
 
-possibliltyTree(problem,10);
+let problem = "MI";
+let tofind = "MUI";
+
+// possibliltyTree(problem,12);
+console.log(find2(problem,tofind,6));
