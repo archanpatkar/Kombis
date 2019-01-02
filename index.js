@@ -1,12 +1,13 @@
-let symbols = ["(",")","*","I","K","S","Y"];
+const symbols = ["(",")","*","I","K","S","Y"];
 
 function empty(str)
 {
-    if(str == "") return true;
-    if(str == " ") return true;
-    if(str == "\n") return true;
-    if(str == "\b") return true;
-    if(str == "\t") return true;
+    if(
+        str == "" || str == " " || 
+        str == "\n" || str == "\b" || 
+        str == "\t"
+    ) return true;
+    return false;
 }
 
 function parse(string,values)
@@ -103,11 +104,15 @@ function transform(tree)
     tree = Array.from(tree);
     let transformed = [];
     for(let n in tree)
-    {    
+    {  
         let node = tree[n];
         let c = node[0];
         node.shift();
-        if(Array.isArray(c)) transformed.push(transform([c]));
+        if(Array.isArray(c)) 
+        {
+            let o = transform([c])
+            if(o != undefined) transformed.push(o);
+        }
         if(c in combinators)
         {
             let comb = combinators[c];
@@ -130,8 +135,16 @@ function transform(tree)
                 transformed.push(`(${comb.c})`);
             }
         }
+        for(let c of node)
+        {
+            if(Array.isArray(c)) 
+            {
+                let o = transform([c])
+                if(o != undefined) transformed.push(o);
+            }
+        } 
     }
-    return transformed;
+    if(!(transformed.length == 0)) return transformed;
 }
 
 function combi(string,...values)
@@ -149,21 +162,11 @@ function combc(string,...values)
 {
     let parsed = parse(string,values);
     let tree = ast(parsed);
-    console.log(tree);
     let mtree = deftransform(tree);
-    console.log(mtree);
     let transformed = transform(mtree);
-    console.log(transformed);
     return transformed
             .reduce((acc, val) => acc.concat(val), []);
 }
 
 module.exports.combi = combi;
 module.exports.combc = combc;
-
-
-console.log(combc`(
-    (*Jag* ${(x)=>(y)=>(z)=>z}) 
-    (IJagIKI)
-    (KI)
-)`);
