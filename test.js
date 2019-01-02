@@ -73,6 +73,11 @@ const or_f_f = combi`(SK(SK)(SK))`
 console.log(or_f_f[0].toString());
 
 
+let t = combc`(
+    (*Jag* ${(x)=>(y)=>(z)=>z}) 
+    (IJagIKI)
+    (KI)
+)`
 console.log(combc`(
     (*Jag* ${(x)=>(y)=>(z)=>z}) 
     (IJagIKI)
