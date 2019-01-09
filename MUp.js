@@ -174,7 +174,7 @@ function find2(start,end,iterations)
 }
 
 let problem = "MI";
-let tofind = "MUI";
+let tofind = "MII";
 
 // possibliltyTree(problem,12);
 console.log(find2(problem,tofind,6));
