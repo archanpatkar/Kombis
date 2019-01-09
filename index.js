@@ -77,8 +77,6 @@ function macrodeftransform(ast)
             ast.shift();
         }
     }
-    console.log("Here!");
-    console.log(ast);
     return ast;
 }
 
@@ -112,7 +110,6 @@ function macrotransform(ast)
     let code = astToCode(ast);
     for(let m in macros)
     {
-        console.log(m);
         code = code.replace(new RegExp(`${m}`),macros[m]);
     }
     return code;
@@ -143,7 +140,6 @@ function deftransform(ast)
     return ast;
 } 
 
-
 const I = x => x;
 const K = x => y => x;
 const S = x => y => z => x(z)(y(z));
@@ -158,7 +154,6 @@ let combinators = {
 
 function transform(tree)
 {
-    console.log(tree);
     tree = Array.from(tree);
     let transformed = [];
     for(let n in tree)
@@ -178,6 +173,7 @@ function transform(tree)
             for(let v = 0; v < node.length; v++)
             {
                 const val = node[v];
+                node.splice(v,1);
                 if(Array.isArray(val)) values.push(transform([val]));
                 else if(val in combinators) values.push(`${combinators[val].c}`);
                 else if(val != undefined) values.push(val);
@@ -205,17 +201,37 @@ function transform(tree)
     if(!(transformed.length == 0)) return transformed;
 }
 
+function flatten(arr)
+{
+    out = [];
+    for(let e of arr)
+    {
+        if(Array.isArray(e))
+        {
+            out.push(...flatten(e));
+        }
+        else out.push(e);
+    }
+    return out;
+}
+
 function combi(string,...values)
 {
     let parsed = parse(string,values);
     let tree = ast(parsed);
+    let mcode = macrotransform(macrodeftransform(tree));
+    tree = ast(parse(mcode,values));
     let mtree = deftransform(tree);
     let transformed = transform(mtree);
     if(transformed)
     {
-        return transformed
-            .reduce((acc, val) => acc.concat(val), [])
-            .map(tfc => eval(tfc));
+        // return transformed
+        //     .reduce((acc, val) => acc.concat(val), [])
+        //     .map(tfc => eval(tfc));
+        console.log(transformed);
+        console.log(flatten(transformed));
+        return flatten(transformed)
+                .map(tfc => eval(tfc));
     }
 }
 
@@ -224,11 +240,8 @@ function combc(string,...values)
     let parsed = parse(string,values);
     let tree = ast(parsed);
     let mcode = macrotransform(macrodeftransform(tree));
-    console.log(mcode);
     tree = ast(parse(mcode,values));
-    console.log(tree);
     let mtree = deftransform(tree);
-    console.log(mtree);
     let transformed = transform(mtree);
     if(transformed)
     {
@@ -240,9 +253,5 @@ function combc(string,...values)
 module.exports.combi = combi;
 module.exports.combc = combc;
 
-console.log(combc`(@Jag@ KI)`);
-console.log(combc`((IJagIKI)(KI))`);
-
-// console.log("Original");
-// console.log(macrotransform(macrodeftransform(ast(parse("((@Jag@ KI)(IJagIKI)(KI))",[])))));
-// console.log(macros);
+combc`(@Jag@ KI)`;
+console.log(combi`((IJagIKI)(KI))`);
