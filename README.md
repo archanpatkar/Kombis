@@ -37,7 +37,7 @@ combi`(SK)`
 combi`((K(I ${false})(I(I ${10}))))`
 ```
 ### Recursion
-> This will lead to Infinite Recursion 💣
+> This will lead to Infinite Recursion
 
 Recursion in **SKI Combinator Calculus** and **Lambda Calculus** is achieved by Fixed-point combinators and
 the infamous **Y Combinator** discovered by **Haskell Curry** 
