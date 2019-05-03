@@ -104,7 +104,8 @@ function possibliltyTree(start,iterations)
             let rules = canAppyHowMany(m);   
             if(rules != undefined) {
                 for(let rule of rules) {
-                    temp.push(applyRule(m,rule));
+                    const val = applyRule(m,rule);
+                    if(!(val in temp)) temp.push(val);
                 }
             }
         }
@@ -114,6 +115,7 @@ function possibliltyTree(start,iterations)
         }
         i++;
     }
+    return main;
 }
 
 function find(start,end,iterations)
@@ -176,5 +178,5 @@ function find2(start,end,iterations)
 let problem = "MI";
 let tofind = "MII";
 
-// possibliltyTree(problem,12);
-console.log(find2(problem,tofind,6));
+console.log(possibliltyTree(problem,12));
+// console.log(find2(problem,tofind,6));
