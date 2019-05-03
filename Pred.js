@@ -8,8 +8,22 @@ function predicate(string,...values)
         main = main.concat(cut);
         if(values.length > s) main.push(values[s]);
     }
+    console.log(main);
     console.log(parse(main));
     return string;
+}
+
+function tokenize(input)
+{
+    const tokens = [];
+    for(let token of input)
+    {
+        if(token == " " || token == "") continue;
+        if(token == "E")
+        {
+            tokens.push({ type:"Keyword" , value:"" })
+        }
+    }
 }
 
 function next(input)
@@ -83,4 +97,5 @@ function parse(tokens)
     return proposition;
 }
 
-let prop1 = predicate`E y [A x P(x) ^ Q(x)]`;
+let prop1 = predicate`E y A x P(x) && Q(x)`;
+// console.log(prop1);
