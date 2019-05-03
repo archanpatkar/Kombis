@@ -210,6 +210,19 @@ function combc(string,...values)
     return transformed;
 }
 
+// Implementation
+module.exports.empty = empty;
+module.exports.value = value;
+module.exports.parse = parse;
+module.exports.ast = ast;
+module.exports.macrodeftransform = macrodeftransform;
+module.exports.astToCode = astToCode;
+module.exports.macrotransform = macrotransform;
+module.exports.deftransform = deftransform;
+module.exports.transform = transform;
+module.exports.macros = macros;
+module.exports.combinators = combinators;
+
+// Interface
 module.exports.combi = combi;
 module.exports.combc = combc;
-module.exports.combinators = combinators;
