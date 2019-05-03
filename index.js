@@ -10,6 +10,11 @@ function empty(str)
     return false;
 }
 
+function value(v)
+{
+    this.value = v;
+}
+
 function parse(string,values)
 {
     let parsed = [];
@@ -31,21 +36,23 @@ function parse(string,values)
             }
             if(!empty(str)) parsed.push(str);
         }
-        if(values[s] != undefined) parsed.push(values[s]);
+        if(values[s] != undefined) parsed.push(new value(values[s]));
     }
     return parsed;
 }
 
 let macros = {};
 
-function ast(parsed)
+function ast(parsed,first=true)
 {
     let char = parsed[0];
     parsed.shift();
     let node = [];
+    if(first && char != "(") throw new SyntaxError("Start with `(`");
     while(char != ")")
     {
-        if(char == "(") node.push(ast(parsed));
+        if(parsed.length == 0) throw new SyntaxError("Missing `)`");
+        if(char == "(") node.push(ast(parsed,false));
         else node.push(char);
         char = parsed[0];
         parsed.shift();
@@ -69,6 +76,7 @@ function macrodeftransform(ast)
             let char = "";
             while(char != "@")
             {
+                if(n.length == 0) throw new SyntaxError("Missing `@`");
                 name += char;
                 char = n[0];
                 n.shift();
@@ -83,7 +91,6 @@ function macrodeftransform(ast)
 function astToCode(ast)
 {
     let str = "";
-    str += "("
     for(let n of ast)
     {
         if(Array.isArray(n))
@@ -93,15 +100,23 @@ function astToCode(ast)
             {
                 if(Array.isArray(c))
                 {
+                    str += "(";
                     c = macrotransform(c);
+                    str += c;
+                    str += ")";
                 }
-                str += c
+                else if(c instanceof value) str += "_"
+                else str += c
             }
             str += ")"
         }
+        else if(n instanceof value) str += "_"
         else str += n
     }
-    str += ")"
+    if(ast.length == 0)
+    {
+        str = "()";
+    }
     return str;
 }
 
@@ -131,7 +146,7 @@ function deftransform(ast)
                 char = n[0];
                 n.shift();
             }
-            combinators[name] = { c: n[0] , params:n.length };
+            combinators[name] = n[0].value;
             n.shift();
             ast.shift();
         }
@@ -146,73 +161,31 @@ const S = x => y => z => x(z)(y(z));
 const Y = a => (x => y => z => x(z)(y(z)))((x => y => x)((x => y => z => x(z)(y(z)))(x => x)(x => x)))((x => y => z => x(z)(y(z)))((x => y => z => x(z)(y(z)))((x => y => x)(x => y => z => x(z)(y(z))))(x => y => x))((x =>y => x)((x => y => z => x(z)(y(z)))(x => x)(x => x))))(a);
 
 let combinators = {
-    "I":{ c:I , params:1 },
-    "K":{ c:K , params:2 },
-    "S":{ c:S , params:3 },
-    "Y":{ c:Y , params:1 }
+    "I":I,
+    "K":K,
+    "S":S,
+    "Y":Y
 };
 
 function transform(tree)
 {
     tree = Array.from(tree);
-    let transformed = [];
-    for(let n in tree)
-    {  
-        let node = tree[n];
-        let c = node[0];
-        node.shift();
-        if(Array.isArray(c)) 
-        {
-            let o = transform([c])
-            if(o != undefined) transformed.push(o);
-        }
-        if(c in combinators)
-        {
-            let comb = combinators[c];
-            let values = [];
-            for(let v = 0; v < node.length; v++)
-            {
-                const val = node[v];
-                node.splice(v,1);
-                if(Array.isArray(val)) values.push(transform([val]));
-                else if(val in combinators) values.push(`${combinators[val].c}`);
-                else if(val != undefined) values.push(val);
-            }
-            if(values.length > 0)
-            {
-                let params = "";
-                for(let v of values) params += `(${v})`
-                transformed.push(`(${comb.c})${params}`);
-            }
-            else
-            {
-                transformed.push(`(${comb.c})`);
-            }
-        }
-        for(let c of node)
-        {
-            if(Array.isArray(c)) 
-            {
-                let o = transform([c])
-                if(o != undefined) transformed.push(o);
-            }
-        } 
-    }
-    if(!(transformed.length == 0)) return transformed;
-}
-
-function flatten(arr)
-{
-    out = [];
-    for(let e of arr)
+    let main = [];
+    for(let node of tree)
     {
-        if(Array.isArray(e))
+        let str = "";
+        for(let sub of node)
         {
-            out.push(...flatten(e));
+            if(Array.isArray(sub)) 
+                str += `(${transform([sub])})`;
+            else if(sub in combinators)
+                str += `(${combinators[sub]})`;
+            else if(sub != undefined) 
+                str += `(${sub.value})`;
         }
-        else out.push(e);
+        main.push(str);
     }
-    return out;
+    return main;
 }
 
 function combi(string,...values)
@@ -220,19 +193,10 @@ function combi(string,...values)
     let parsed = parse(string,values);
     let tree = ast(parsed);
     let mcode = macrotransform(macrodeftransform(tree));
-    tree = ast(parse(mcode,values));
+    tree = ast(parse(mcode.split("_"),values));
     let mtree = deftransform(tree);
     let transformed = transform(mtree);
-    if(transformed)
-    {
-        // return transformed
-        //     .reduce((acc, val) => acc.concat(val), [])
-        //     .map(tfc => eval(tfc));
-        console.log(transformed);
-        console.log(flatten(transformed));
-        return flatten(transformed)
-                .map(tfc => eval(tfc));
-    }
+    return transformed.map(code=>eval(code));
 }
 
 function combc(string,...values)
@@ -240,18 +204,12 @@ function combc(string,...values)
     let parsed = parse(string,values);
     let tree = ast(parsed);
     let mcode = macrotransform(macrodeftransform(tree));
-    tree = ast(parse(mcode,values));
+    tree = ast(parse(mcode.split("_"),values));
     let mtree = deftransform(tree);
     let transformed = transform(mtree);
-    if(transformed)
-    {
-        return transformed
-            .reduce((acc, val) => acc.concat(val), []);
-    }
+    return transformed;
 }
 
 module.exports.combi = combi;
 module.exports.combc = combc;
-
-combc`(@Jag@ KI)`;
-console.log(combi`((IJagIKI)(KI))`);
+module.exports.combinators = combinators;
