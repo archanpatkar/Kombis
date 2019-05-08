@@ -2,7 +2,7 @@ const { combi , combc , combinators } = require("./index");
 
 // Random
 console.log("RANDOM");
-let test1 = combi`( ( K (I ${false}) (I(I ${10})) ) )`;
+let test1 = combi`( (K (I ${false}) (I(I ${10})) ) )`;
 console.log(test1);
 
 
@@ -82,5 +82,8 @@ console.log(combc`(
 console.log(combinators);
 
 combc`(@Jag@ KI)`;
-out = combi`((((IJagIKI)(KI)(IK))(JagI)))  (KKI ${10})`;
+out = combi`
+        ((((IJagIKI)(KI)(IK))(JagI)))
+        (KKI ${10})`;
+console.log(out);
 console.log(out[1]());
