@@ -45,21 +45,14 @@ let macros = {};
 
 function ast(parsed,first=true)
 {
-    let char = parsed[0];
-    parsed.shift();
     let node = [];
-    if(first && char != "(") throw new SyntaxError("Start with `(`");
-    while(char != ")")
+    let char = parsed.shift();
+    while(first?parsed.length != 0:char != ")")
     {
         if(parsed.length == 0) throw new SyntaxError("Missing `)`");
         if(char == "(") node.push(ast(parsed,false));
         else node.push(char);
-        char = parsed[0];
-        parsed.shift();
-    }
-    if(char == ")")
-    {
-        parsed.push(")");
+        char = parsed.shift();
     }
     return node;
 }
@@ -81,7 +74,9 @@ function macrodeftransform(ast)
                 char = n[0];
                 n.shift();
             }
-            macros[name] = n.join("");
+            macro_replc = n.join("");
+            if(!empty(macro_replc)) macros[name] = macro_replc;
+            else throw new Error("Please give a transform for the macro");
             ast.shift();
         }
     }
@@ -146,7 +141,19 @@ function deftransform(ast)
                 char = n[0];
                 n.shift();
             }
-            combinators[name] = n[0].value;
+            if(n[0] instanceof value)
+            {
+                combinator = n[0].value;
+                if(combinator instanceof Function && typeof combinator === "function")
+                {
+                    combinators[name] = n[0].value;
+                }
+                else
+                {
+                    throw new Error("Transformation should be a function");
+                }
+            }
+            else throw new Error("Please give a valid transformation function");
             n.shift();
             ast.shift();
         }
@@ -180,8 +187,9 @@ function transform(tree)
                 str += `(${transform([sub])})`;
             else if(sub in combinators)
                 str += `(${combinators[sub]})`;
-            else if(sub != undefined) 
+            else if(sub instanceof value) 
                 str += `(${sub.value})`;
+            else throw new Error("No such Combinator");
         }
         main.push(str);
     }
