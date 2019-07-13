@@ -23,11 +23,13 @@ let output = combi`...`
 
 ## Examples
 ### Encoding TRUE
+This is representing the value TRUE from Church Encodings in SKI Calculus
 ```javascript
 combi`(K)`
 ```
 
 ### Encoding FALSE
+This is representing the value FALSE from Church Encodings in SKI Calculus
 ```javascript
 combi`(SK)`
 ```
