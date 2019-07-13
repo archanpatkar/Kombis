@@ -86,7 +86,7 @@ combi`(Y ${x => 10})`
 ```
 
 ### Creating Javascript Transforms
-```
+```javascript
 combc`(
     (*J* ${(x)=>(y)=>(z)=>z}) 
     (IJIKI)
