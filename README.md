@@ -84,3 +84,12 @@ combi`(S(K(SII))(S(S(KS)K)(K(SII))) ${x => 10})`
 ```javascript
 combi`(Y ${x => 10})`
 ```
+
+### Creating Javascript Transforms
+```
+combc`(
+    (*J* ${(x)=>(y)=>(z)=>z}) 
+    (IJIKI)
+    (KI)
+)`
+```
