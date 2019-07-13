@@ -21,8 +21,6 @@ let compiled = combc`...`
 let output = combi`...`
 ```
 
-## Language
-
 ## Examples
 ### Encoding TRUE
 ```javascript
