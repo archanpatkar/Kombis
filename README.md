@@ -86,6 +86,11 @@ combi`(S(K(SII))(S(S(KS)K)(K(SII))) ${x => 10})`
 ```javascript
 combi`(Y ${x => 10})`
 ```
+### Creating Macro Transforms
+```javascript 
+combi`(@custom@ KI)`
+combi`((((IcustomIKI)(KI)(IK))(customI)))`
+```
 
 ### Creating Javascript Transforms
 ```javascript
