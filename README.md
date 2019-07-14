@@ -103,7 +103,7 @@ combi`(
 
 ### Using the evaluated values/functions
 ```javascript
-let v = combi`(SII ${(x) => 10})`;
+let v = combi`(SII ${x => 10})`;
 // This given SKI code is applying above lambda to itself and returning the output
 // Effectively it is (x => 10)(x => 10) -> 10
 console.log(v[0]); // Will print 10
