@@ -34,7 +34,7 @@ This is representing the value FALSE from Church Encodings in SKI Calculus
 combi`(SK)`
 ```
 
-### Using Custom Primitive Values in conjunction with Kombis
+### Using Custom Primitive Values in conjunction with SKI code
 ```javascript
 combi`((K(I ${false})(I(I ${10}))))`
 ```
