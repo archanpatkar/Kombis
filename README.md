@@ -72,7 +72,7 @@ SIIβ
 = ...
 ```
 
-Combi Code
+Kombis Code
 ```javascript
 combi`(S(K ${x => 10})(SII)(S(K ${x => 10})(SII)))`
 ```
