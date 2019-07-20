@@ -218,7 +218,7 @@ function combc(string,...values)
     return transformed;
 }
 
-// Implementation
+// Internal
 module.exports.empty = empty;
 module.exports.value = value;
 module.exports.parse = parse;
@@ -231,6 +231,6 @@ module.exports.transform = transform;
 module.exports.macros = macros;
 module.exports.combinators = combinators;
 
-// Interface
+// Tags
 module.exports.combi = combi;
 module.exports.combc = combc;
